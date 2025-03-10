@@ -20,17 +20,17 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: yorkzap
-        password: dckr_pat_dUjRsWRQWsZsc_Dlmxf7Zep1SD0
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
         
     - name: Build the Docker Image
       run: |
-        docker build -t yorkzap/itas276-nodegoat-rajsingh:latest .
-        docker build -t yorkzap/itas276-nodegoat-rajsingh:$(date +%s) .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/itas276-nodegoat-rajsingh:latest .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/itas276-nodegoat-rajsingh:$(date +%s) .
         
     - name: Push Docker Image to Docker Hub
       run: |
-        docker push yorkzap/itas276-nodegoat-rajsingh:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/itas276-nodegoat-rajsingh:latest
 
   semgrep-sast:
     name: Semgrep SAST Scan
@@ -42,7 +42,7 @@ jobs:
       - name: Run Semgrep scan
         uses: semgrep/semgrep-action@v1
         with:
-          publishToken: ae59248ceb08a5ea55ac0e0e8aa5693b81cc931d0fb40c92621a14140ae3566d
+          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
           generateSarif: "1"
           config: >-
             p/security-audit
