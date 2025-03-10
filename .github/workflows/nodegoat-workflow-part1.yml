@@ -40,13 +40,13 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Run Semgrep scan
-        uses: semgrep/semgrep-action@v1
-        with:
-          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
-          generateSarif: "1"
-          config: >-
-            p/security-audit
-            p/javascript
+        run: |
+          # Install semgrep
+          pip install semgrep
+          # Run the scan
+          semgrep ci --sarif > semgrep.sarif
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
             
       - name: Upload Semgrep SARIF results
         uses: actions/upload-artifact@v4
@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '16'
           
