@@ -52,11 +52,11 @@ jobs:
           name: semgrep-results
           path: semgrep.sarif
 
-  # SCA scanning using NPM Audit on Self-Hosted Runner
+  # SCA scanning using NPM Audit on GitHub-hosted runner (for demonstration)
   npm-audit-sca:
     name: NPM Audit SCA Scan
-    # Replace this with your actual self-hosted runner label
-    runs-on: self-hosted
+    # Using GitHub-hosted runner instead of self-hosted
+    runs-on: ubuntu-latest
     # No "needs" dependency to run in parallel
     steps:
       - uses: actions/checkout@v4
